@@ -2,42 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video on Canvas 2</title>
+  <title>Canvas Video Loop</title>
 </head>
 <body>
   <canvas id="ctx" width="1200" height="800"></canvas>
-  
+
   <script>
-    var ctx = document.getElementById('ctx').getContext('2d');
-  
-    // Create a video element
+    const canvas = document.getElementById('ctx');
+    const ctx = canvas.getContext('2d');
+
     const video = document.createElement('video');
     video.src = 'TitleScreen.mp4'; 
     video.loop = true;
     video.muted = true;
-    video.playsInline = true; // Important for iOS
-    video.autoplay = true;    // Some browsers may still require user interaction
-  
-    // Start playing when ready
+    video.playsInline = true;
+    video.autoplay = true;
+
     video.addEventListener('canplay', () => {
       video.play();
       drawFrame();
     });
-  
+
     function drawFrame() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Optional, clears previous frame
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       requestAnimationFrame(drawFrame);
     }
-  
-    // Fallback in case autoplay is blocked
+
     video.play().catch(err => {
       console.warn('Autoplay might be blocked:', err);
     });
-
-
-
   </script>
 </body>
 </html>
