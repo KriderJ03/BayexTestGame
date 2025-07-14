@@ -1,33 +1,44 @@
-<canvas id="ctx" width="1200" height="800"></canvas>
-<script>
-  const canvas = document.getElementById('ctx');
-  const ctx = canvas.getContext('2d');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video on Canvas</title>
+</head>
+<body>
+  <canvas id="ctx" width="1200" height="800"></canvas>
+  
+  <script>
+    const canvas = document.getElementById('ctx');
+    const ctx = canvas.getContext('2d');
+  
+    // Create a video element
+    const video = document.createElement('video');
+    video.src = 'Test.mp4'; 
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true; // Important for iOS
+    video.autoplay = true;    // Some browsers may still require user interaction
+  
+    // Start playing when ready
+    video.addEventListener('canplay', () => {
+      video.play();
+      drawFrame();
+    });
+  
+    function drawFrame() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Optional, clears previous frame
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      requestAnimationFrame(drawFrame);
+    }
+  
+    // Fallback in case autoplay is blocked
+    video.play().catch(err => {
+      console.warn('Autoplay might be blocked:', err);
+    });
 
-  // Create a video element
-  const video = document.createElement('video');
-  video.src = 'Test.mp4'; 
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true; // Important for iOS
-  video.autoplay = true;    // Some browsers may still require user interaction
-
-  // Start playing when ready
-  video.addEventListener('canplay', () => {
-    video.play();
-    drawFrame();
-  });
-
-  function drawFrame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Optional, clears previous frame
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    requestAnimationFrame(drawFrame);
-  }
-
-  // Fallback in case autoplay is blocked
-  video.play().catch(err => {
-    console.warn('Autoplay might be blocked:', err);
-  });
 
 
-
-</script>
+  </script>
+</body>
+</html>
