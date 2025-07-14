@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video on Canvas</title>
+  <title>Video on Canvas 2</title>
 </head>
 <body>
   <canvas id="ctx" width="1200" height="800"></canvas>
   
   <script>
-    const canvas = document.getElementById('ctx');
-    const ctx = canvas.getContext('2d');
+    var ctx = document.getElementById('ctx').getContext('2d');
   
     // Create a video element
     const video = document.createElement('video');
